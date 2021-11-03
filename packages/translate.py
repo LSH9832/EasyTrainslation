@@ -1,21 +1,24 @@
 import hashlib
 import random
 import requests
+from pathlib import Path
 
 
+this_dir = Path(__file__).absolute().parents[0].parents[0]
+#print(this_dir)
 apiURL = 'http://api.fanyi.baidu.com/api/trans/vip/translate'
 defaultAccount = {'id':'20151113000005349', 'key':'osubCEzlGjzvw8qdQc41'}
 
 def getID_and_Key():
     try:
-        id_key = open("id&key.ini").read().split('\n')
+        id_key = open("%s/id&key.ini" % this_dir).read().split('\n')
         appID = id_key[0].split(':')[1]
         secretKey = id_key[1].split(':')[1]
     except:
         # 感谢CSDN博主LCYong_提供的appid和秘钥，原网址：https://blog.csdn.net/lcyong_/article/details/79068636
         appID = defaultAccount['id']
         secretKey = defaultAccount['key']
-        open('id&key.ini','w').write('appID:%s\nkey:%s' % (appID, secretKey))
+        open("%s/id&key.ini" % this_dir,'w').write('appID:%s\nkey:%s' % (appID, secretKey))
     # print(appID, secretKey)
     return appID, secretKey
 
