@@ -1,0 +1,39 @@
+#! /usr/bin/python3
+import os
+from pathlib import Path
+
+username = os.popen('echo $USER').read().rstrip('\n')
+this_dir = str(Path(__file__).absolute().parent)
+this_icon = this_dir + '/icon.png'
+this_window = this_dir + '/main.py'
+this_desktop = '/home/%s/.local/share/applications/EasyTranslation.desktop' % username
+os.system('sudo chmod 777 ./setup.py')
+
+print('\n-------------------- Install Requirements --------------------\n')
+
+os.system('sudo apt install xsel python3-xlib')
+os.system('pip3 install pyqt5 pyqt5-tools pymouse PyUserInput')
+
+print('\n-------------------- Create Desktop Entry --------------------\n')
+
+
+print('Creating file "%s" ...\n' % this_desktop)
+
+strings = """[Desktop Entry]
+Comment=EasyTranslation.
+Name=EasyTranslation
+StartupNotify=false
+Exec=/usr/bin/python3 %s
+Terminal=false
+Type=Application
+Categories=Development;IDE;
+Icon=%s""" % (this_window, this_icon)
+
+open(this_desktop, 'w').write(strings)
+
+if os.path.exists(this_desktop):
+    print('Desktop file created.')
+else:
+    print('Failed to create desktop file, please check permission of dir /home/%s/.local/share/applications' % username)
+
+print('\n---------------------------- End ----------------------------\n')
