@@ -11,15 +11,10 @@ from packages.translate import *
 from pymouse import PyMouse as mouse
 
 import os
-# from PyQt5           import *
-# import multiprocessing as mp
 
-# 主窗口
-#######################################################################################################################
+
 class MainWindow(QMainWindow, MAIN):
-
-    # 初始化函数
-    ###################################################################################################################
+    
     def __init__(self, parent=None):
 
         super(MainWindow, self).__init__(parent)
@@ -41,11 +36,8 @@ class MainWindow(QMainWindow, MAIN):
         self.timer2.timeout.connect(self.timeoutFun2)
         self.timer2.start(1)
 
-
-        # self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
         self.setWindowFlags(QtCore.Qt.SplashScreen | QtCore.Qt.FramelessWindowHint | QtCore.Qt.WindowStaysOnTopHint)
         self.setMinimumSize(300, 300)
-
 
         self.highlightText = ''
         self.originText = ''
@@ -59,8 +51,6 @@ class MainWindow(QMainWindow, MAIN):
         self.dx2 = 0
         self.dy2 = 0
         self.screenRect = QApplication.desktop().screenGeometry()
-
-
 
         self.highlightText = os.popen('echo $(xsel -o)').read()
         if self.highlightText.endswith('\n'):
@@ -92,9 +82,7 @@ class MainWindow(QMainWindow, MAIN):
     def preprocess(text):
         return text.replace('-\r', '').replace('-\n', '').replace('\n', ' ').replace('\r',' ')
 
-    # 翻译按钮
     def translate(self, text):
-        # print("你按了 " + self.translate.text() + " 这个按钮")
         text = self.preprocess(text)
 
         result = baidu_translate(text)['trans_result'][0]['dst']
@@ -118,9 +106,7 @@ QPushButton{background-color:rgb(80,80,80);color:white}'''
 
         self.setStyleSheet(styleSheet)
 
-    # 自动运行的函数
     def timeoutFun(self):
-        # print('123')
         this_highlightText = os.popen('echo $(xsel -o)').read()
         if this_highlightText.endswith('\n'):
             this_highlightText = this_highlightText[:-1]
@@ -184,7 +170,6 @@ def main():
 
 
 if __name__ == '__main__':
-    # mp.freeze_support()
     # sudo apt install xsel python3-xlib
     # pip3 install pyqt5 pyqt5-tools pymouse PyUserInput
     main()
