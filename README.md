@@ -1,4 +1,4 @@
-# EasyTrainslation(仅支持Linux)简易翻译工具
+# EasyTranslation(仅支持Linux)简易翻译工具
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;windows下的翻译软件很多，但是貌似linux没有多少，看外文文献有点不方便，使用本工具可以稍微方便一些。
 <strong>使用本工具之前，你需要确定你的linux系统中有python3环境，并且安装了python3-pip</strong>
 
