@@ -49,7 +49,7 @@ def baiduAPI_translate(query_str, to_lang):
         except Exception as e:
             print('Some errors occured: ', e)
             trytime -= 1
-
+    return '访问频率受限或网络连接有问题'
 
 def baidu_translate(query_str, dst_lang=''):
 
