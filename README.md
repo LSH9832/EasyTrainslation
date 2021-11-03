@@ -6,9 +6,10 @@
 ```bash
 git clone https://github.com/LSH9832/EasyTranslation.git
 cd EasyTrainslation
+chmod +x ./setup
 ./setup
 ```
 即可安装完毕。
 ## 使用
-本工具的是百度翻译的API。首次翻译后会出现id&key.ini文件，如果需要使用自己的API账号请自行更改。<br>
+本工具的是百度翻译的API。首次翻译后会出现id&key.ini文件，默认的是热心网友提供的appid和key, 但是开通的功能是普通版，速度特别慢(qps=1, 实际使用感觉还要更慢)，如果需要使用自己的API账号开通高级版（qps=10, 每月200万字符免费，超出部分49RMB/百万字符，余额不足当月自动停用），请自行更改文件配置。<a href='https://api.fanyi.baidu.com/product/11'>点此获取自己的appID和key</a><br><br>
 打开后用鼠标选中文字即可翻译。
