@@ -7,12 +7,38 @@ this_dir = str(Path(__file__).absolute().parent)
 this_icon = this_dir + '/icon.png'
 this_window = this_dir + '/main.py'
 this_desktop = '/home/%s/.local/share/applications/EasyTranslation.desktop' % username
-os.system('sudo chmod 777 ./setup.py')
+os.system('sudo chmod 777 ./setup')
+
+while True:
+    ans = input('you are using a conda enviroment?\n([y]/n)\n>>> ')
+    if ans == 'y' or ans == '':
+        flag = True
+        while True:
+            condaInterpreter = input('enter your conda env dir(for example: /home/user/anaconda3/envs/myenv/\n>>> ')
+            if not condaInterpreter.endswith('/'):
+                condaInterpreter += '/'
+            if not os.path.exists('%sbin/python3' % condaInterpreter):
+                print("there is no interpreter named %sbin/python3" % condaInterpreter)
+            else:
+                condaInterpreter = '%sbin/python3' % condaInterpreter
+                break
+        break
+    elif ans == 'no':
+        flag = False
+        break
+    else:
+        print('wrong input!\n')
+
+
 
 print('\n-------------------- Install Requirements --------------------\n')
 
+os.system('sudo apt install qt5-default')
+os.system('sudo apt install qttools5-dev-tools')
 os.system('sudo apt install xsel python3-xlib')
-os.system('pip3 install pyqt5 pyqt5-tools pymouse PyUserInput')
+os.system('pip3 install pyqt5 pyqt5-tools' if not flag else 'conda install pyqt')
+os.system('pip3 install pymouse')
+os.system('pip3 install PyUserInput')
 
 print('\n-------------------- Create Desktop Entry --------------------\n')
 
@@ -23,11 +49,11 @@ strings = """[Desktop Entry]
 Comment=EasyTranslation.
 Name=EasyTranslation
 StartupNotify=false
-Exec=/usr/bin/python3 %s
+Exec=%s %s
 Terminal=false
 Type=Application
 Categories=Development;IDE;
-Icon=%s""" % (this_window, this_icon)
+Icon=%s""" % (condaInterpreter if flag else '/usr/bin/python3', this_window, this_icon)
 
 open(this_desktop, 'w').write(strings)
 
