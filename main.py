@@ -2,7 +2,7 @@ from packages.translation_ui2py import Ui_MainWindow as MAIN
 
 from sys             import argv, exit
 
-from PyQt5           import QtCore, QtGui, Qt
+from PyQt5           import QtCore, QtGui
 from PyQt5.QtCore    import QTimer
 from PyQt5.QtWidgets import QApplication, QMainWindow
 from PyQt5.QtGui     import QIcon
@@ -19,24 +19,32 @@ class MainWindow(QMainWindow, MAIN):
 
         super(MainWindow, self).__init__(parent)
         super(MainWindow, self).setupUi(self)
-        # loadUi('main.ui', self)
 
-        # 加载图标
         self.loadIcon()
 
         self.exit.clicked.connect(self.closeFun)
         self.deepColorMode.clicked.connect(self.setColorMode)
         self.floatWindowMode.clicked.connect(self.setFloatWindow)
 
-        self.timer = QTimer()  # 定时器，或者计时器， whatever
-        self.timer.timeout.connect(self.timeoutFun)  # 每2000毫秒自动运行一次的函数
+        self.timer = QTimer()
+        self.timer.timeout.connect(self.timeoutFun)
         self.timer.start(300)
 
         self.timer2 = QTimer()
         self.timer2.timeout.connect(self.timeoutFun2)
         self.timer2.start(1)
 
-        self.setWindowFlags(QtCore.Qt.SplashScreen | QtCore.Qt.FramelessWindowHint | QtCore.Qt.WindowStaysOnTopHint)
+        import platform
+        version = platform.version()
+        if '16.04' in version and ('Ubuntu' in version or 'ubuntu' in version):
+            self.setWindowFlags(QtCore.Qt.FramelessWindowHint | QtCore.Qt.WindowStaysOnTopHint)
+        elif 'Ubuntu' in version or 'ubuntu' in version:
+            noAccept = ['10.04','12.04','14.04']
+            for vs in noAccept:
+                if vs in version:
+                    print('this tool does not support your system version, upgrade your operate system to at least Ubuntu16.04.')
+                    exit(0)
+            self.setWindowFlags(QtCore.Qt.SplashScreen | QtCore.Qt.FramelessWindowHint | QtCore.Qt.WindowStaysOnTopHint)
         self.setMinimumSize(300, 300)
 
         self.highlightText = ''
@@ -158,7 +166,6 @@ QPushButton{background-color:rgb(80,80,80);color:white}'''
             y = self.mouse.position()[1] + 50
             self.setGeometry(x,y,w,h)
 
-    # 加载图标
     def loadIcon(self):
         self.setWindowIcon(QIcon('icon.png'))
 
