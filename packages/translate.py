@@ -3,11 +3,10 @@ import random
 import requests
 from pathlib import Path
 
-
 this_dir = Path(__file__).absolute().parents[0].parents[0]
-#print(this_dir)
 apiURL = 'http://api.fanyi.baidu.com/api/trans/vip/translate'
 defaultAccount = {'id':'20151113000005349', 'key':'osubCEzlGjzvw8qdQc41'}
+
 
 def getID_and_Key():
     try:
@@ -35,7 +34,7 @@ def baiduAPI_translate(query_str, to_lang):
             'from': 'auto',
             'to': to_lang,
             'appid': appID,
-            'salt':salt,
+            'salt': salt,
             'sign': sign
         }
         try:
